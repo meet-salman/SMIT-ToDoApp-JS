@@ -5,7 +5,9 @@ const ul = document.querySelector('#ul');
 
 let listItems = []
 
-function userData() {
+function userData(e) {
+    e.preventDefault();
+
     let lists = input.value;
     listItems.push(lists);
     ul.innerHTML = ''
@@ -19,13 +21,23 @@ function addTask() {
     for (let i = 0; i < listItems.length; i++) {
         lists = listItems[i];
         input.value = '';
-        ul.innerHTML += (`<li> ${lists} <button>Edit</button> <button onclick="deletes(${i})">Delete</button> </li> <br/>`);
+        ul.innerHTML += (`<li> ${lists} <button onclick="edits(${i})">Edit</button> <button onclick="deletes(${i})">Delete</button> </li> <br/>`);
     }
 }
 
 
 function deletes(index) {
-    listItems.splice(index, 1)
+    listItems.splice(index, 1);
+    ul.innerHTML = ''
+
+    addTask()
+}
+
+
+function edits(index) {
+    listItems.splice(index, 1, prompt('Enter Edited Value'));
+    ul.innerHTML = ''
+
     addTask()
 }
 
